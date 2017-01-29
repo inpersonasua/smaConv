@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="195.0" minWidth="465.0" prefHeight="262.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smaConv.ui.RootLayoutController">
+   <children>
+      <GridPane fx:id="gridPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="412.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="88.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="22.0" minHeight="22.0" prefHeight="22.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="32.0" minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="22.0" minHeight="22.0" prefHeight="22.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="1. Otwórz plik bazy supermemo ( *.smpak):">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="inputFile" editable="false" prefHeight="25.0" prefWidth="313.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="2. Wybierz plik docelowy (*.apkg):" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="outputFile" editable="false" prefHeight="25.0" prefWidth="313.0" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <VBox spacing="10.0" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
+               <children>
+                  <RadioButton fx:id="words" alignment="TOP_LEFT" mnemonicParsing="false" selected="true" text="Słówka">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="group1" />
+                     </toggleGroup>
+                     <tooltip>
+                        <Tooltip text="dom&#10;-----------&#10;house" />
+                     </tooltip>
+                  </RadioButton>
+                  <RadioButton fx:id="wordsWithSound" mnemonicParsing="false" text="Słówka + nagrania" toggleGroup="$group1">
+                     <tooltip>
+                        <Tooltip text="dom&#10;-----------&#10;house ♪" />
+                     </tooltip></RadioButton>
+                  <RadioButton fx:id="clozeDeletion" alignment="TOP_LEFT" mnemonicParsing="false" text="Luka" toggleGroup="$group1">
+                     <tooltip>
+                        <Tooltip text="The girl have a [kot].&#10;kitten&#10;-------------------------------&#10;The girl have a cat.&#10;Dziewczyna ma kota." />
+                     </tooltip></RadioButton>
+                  <RadioButton fx:id="clozeDeletionWithSound" mnemonicParsing="false" text="Luka + nagrania" toggleGroup="$group1">
+                     <tooltip>
+                        <Tooltip text="The girl have a [kot].&#10;kitten&#10;-------------------------------&#10;The girl have a cat.  ♪&#10;Dziewczyna ma kota." />
+                     </tooltip></RadioButton>
+               </children>
+               <padding>
+                  <Insets left="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <Button fx:id="openButton" mnemonicParsing="false" onAction="#handleOpen" prefHeight="25.0" prefWidth="24.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@Open_file.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@Save.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Label text="3. Wybierz typ kart:" GridPane.rowIndex="4">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </GridPane>
+      <Button fx:id="startStopButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleConvert" prefHeight="50.0" prefWidth="100.0" text="4. Start" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+   </children>
+</AnchorPane>
