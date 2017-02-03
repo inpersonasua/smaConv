@@ -6,12 +6,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterOutputStream;
 
 public class SmpakParser implements Parser {
-
   private final FileChannel smpakFile;
   private final HashMap<String, FileEntry> cachedEntries = new HashMap<>();
 
@@ -21,8 +22,12 @@ public class SmpakParser implements Parser {
    * @param smpakFile
    *          - smpak file (usually course.smpak) with supermemo course.
    */
-  public SmpakParser(FileChannel smpakFile) {
-    this.smpakFile = smpakFile;
+  public SmpakParser(Path smpak) {
+    try {
+      this.smpakFile = FileChannel.open(smpak, StandardOpenOption.READ);
+    } catch (IOException e) {
+      throw new RuntimeException("Error at reading file: " + smpak.toString());
+    }
   }
 
   /*
@@ -123,7 +128,7 @@ public class SmpakParser implements Parser {
       }
       return byteArrayOutputStream.toByteArray();
     } catch (IOException exception) {
-      throw new RuntimeException("Error at extracting file from smpak");
+      throw new RuntimeException("Error at extracting file from smpak: " + exception.getMessage());
     }
   }
 

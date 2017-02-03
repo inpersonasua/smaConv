@@ -1,7 +1,6 @@
 package smaConv;
 
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.util.Optional;
 
@@ -97,7 +96,7 @@ public class MainApp extends Application {
       protected Void call() throws Exception {
         isConverting.set(true);
         SuperMemoToAnkiConverter sm2ankiConverter = new SuperMemoToAnkiConverter(
-            new SmpakParser(FileChannel.open(controller.getInputFile())), controller.getConverter(),
+            new SmpakParser(controller.getInputFile()), controller.getConverter(),
             new AnkiApkg(controller.getOutputFile()));
         message = sm2ankiConverter.convert();
         return null;

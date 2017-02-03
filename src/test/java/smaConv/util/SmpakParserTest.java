@@ -2,26 +2,20 @@ package smaConv.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import smaConv.util.Parser;
-import smaConv.util.SmpakParser;
-
 public class SmpakParserTest {
-  // File for testing. Total number of files is 51 (most of them are templates
-  // and resources).
+  // File for testing. Total number of files is 51
   private static final String SMPAK_FILE = "src/test/resources/course.smpak";
 
   private Parser parser;
 
   @Before
-  public void setUp() throws IOException {
-    parser = new SmpakParser(FileChannel.open(Paths.get(SMPAK_FILE)));
+  public void setUp() {
+    parser = new SmpakParser(Paths.get(SMPAK_FILE));
     parser.parse();
   }
 
@@ -31,12 +25,12 @@ public class SmpakParserTest {
   }
 
   @Test
-  public void fileShouldBeFound() throws IOException {
+  public void fileShouldBeFound() {
     assertThat(parser.getFile("course.xml")).isNotEmpty();
   }
 
   @Test
-  public void shouldReturnEmptyByteArrayWhenFileNotFound() throws IOException {
+  public void shouldReturnEmptyByteArrayWhenFileNotFound() {
     assertThat(parser.getFile("no_such_file")).isEmpty();
   }
 }
