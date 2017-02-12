@@ -12,9 +12,12 @@ import java.util.HashMap;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterOutputStream;
 
+import org.riversun.bigdoc.bin.BinFileSearcher;
+
 public class SmpakParser implements Parser {
   private final FileChannel smpakFile;
   private final HashMap<String, FileEntry> cachedEntries = new HashMap<>();
+  private final Path smpakPath;
 
   /**
    * Creates smpak parser for the file argument.
@@ -24,6 +27,7 @@ public class SmpakParser implements Parser {
    */
   public SmpakParser(Path smpak) {
     try {
+      this.smpakPath = smpak;
       this.smpakFile = FileChannel.open(smpak, StandardOpenOption.READ);
     } catch (IOException e) {
       throw new RuntimeException("Error at reading file: " + smpak.toString());
@@ -57,7 +61,7 @@ public class SmpakParser implements Parser {
   @Override
   public void parse() {
     try {
-      smpakFile.position(12);
+      adjustEntrPos();
       int entrPos = readInt();
       int namePos = readInt();
       namePos = findNamesPosition(namePos);
@@ -69,20 +73,31 @@ public class SmpakParser implements Parser {
     }
   }
 
+  /**
+   * Ajusts entrPos - this value is different for *.smpak/*.smpdif and *.smdif2.
+   * 
+   * @throws IOException
+   */
+  private void adjustEntrPos() throws IOException {
+    int checkvaluePosition = 8;
+    smpakFile.position(checkvaluePosition);
+    int checkvalueForSmdif2 = 512;
+    int namePosPosition;
+    if (readShort() == checkvalueForSmdif2) {
+      namePosPosition = 26;
+    } else {
+      namePosPosition = 12;
+    }
+    smpakFile.position(namePosPosition);
+  }
+
   private int findNamesPosition(int lastPosition) throws IOException {
     String textToFind = "course.xml";
-    ByteBuffer buf = ByteBuffer.allocate(textToFind.length());
-    int position = lastPosition;
-    do {
-      smpakFile.position(position);
-      smpakFile.read(buf);
-      if (new String(buf.array(), StandardCharsets.ISO_8859_1).equals(textToFind)) {
-        break;
-      }
-      buf.clear();
-      position++;
-    } while (position < smpakFile.size());
-    return position;
+
+    BinFileSearcher searcher = new BinFileSearcher();
+    long namePos = searcher.indexOf(smpakPath.toFile(), textToFind.getBytes(), lastPosition);
+
+    return (int) namePos;
   }
 
   private void setFileEntries(int namePos, final int filesCnt) throws IOException {
