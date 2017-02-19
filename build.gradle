@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
-version = '0.8'
+version = '0.9'
 jar {
 	manifest {
 		attributes 'Implementation-Title': 'smaConv',
@@ -15,18 +15,19 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.+'
     testCompile 'org.assertj:assertj-core:3.5.2'
     testCompile 'org.skyscreamer:jsonassert:1.4.0'
-    
+       
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.21'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.1'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.1'
 	compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.16.1'
 	compile group: 'org.apache.directory.studio', name: 'org.apache.commons.codec', version: '1.8'
 	compile group: 'commons-io', name: 'commons-io', version: '2.5'
+	compile group: 'org.riversun', name: 'bigdoc', version: '0.3.0'
 }
 
 test {

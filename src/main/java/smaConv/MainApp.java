@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import smaConv.ui.RootLayoutController;
 import smaConv.util.AnkiApkg;
-import smaConv.util.SmpakParser;
+import smaConv.util.SmpakParserWithUpdates;
 
 public class MainApp extends Application {
 
@@ -96,7 +96,7 @@ public class MainApp extends Application {
       protected Void call() throws Exception {
         isConverting.set(true);
         SuperMemoToAnkiConverter sm2ankiConverter = new SuperMemoToAnkiConverter(
-            new SmpakParser(controller.getInputFile()), controller.getConverter(),
+            new SmpakParserWithUpdates(controller.getInputFile()), controller.getConverter(),
             new AnkiApkg(controller.getOutputFile()));
         message = sm2ankiConverter.convert();
         return null;

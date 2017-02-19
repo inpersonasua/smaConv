@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import smaConv.MainApp;
 import smaConv.converters.ClozeConverter;
-import smaConv.converters.ClozeWithSoundConverter;
+import smaConv.converters.ClozeConverterWithSounds;
 import smaConv.converters.Converter;
 import smaConv.converters.WordsConverter;
 import smaConv.converters.WordsWithSoundsConverter;
@@ -77,7 +77,7 @@ public class RootLayoutController {
     } else if (wordsWithSound.isSelected()) {
       return new WordsWithSoundsConverter();
     } else if (clozeDeletionWithSound.isSelected()) {
-      return new ClozeWithSoundConverter();
+      return new ClozeConverterWithSounds();
     } else {
       throw new RuntimeException("Nothing selected.");
     }

@@ -7,24 +7,23 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import smaConv.converters.SimpleWordsConverter;
-import smaConv.converters.SimpleWordsWithSoundsConverter;
 import smaConv.util.AnkiCard;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.SmpakParser;
 
-public class WordsWithSoundsConverterTest {
-  SimpleWordsConverter converter;
+public class WordsFromExamplesWithSoundConverterTest {
+  Converter converter;
   Parser smpakParser;
 
   @Before
   public void setUp() {
-    converter = new SimpleWordsWithSoundsConverter();
+    converter = new WordsFromExamplesWithSoundConverter();
     smpakParser = mock(SmpakParser.class);
-    when(smpakParser.getFile("course.xml")).thenReturn(WordsConverterTest.courseXml.getBytes());
-    when(smpakParser.getFile(WordsConverterTest.xmlFileName))
-        .thenReturn(WordsConverterTest.xmlFile.getBytes());
+    when(smpakParser.getFile("course.xml"))
+        .thenReturn(WordsFromExamplesConverterTest.courseXml.getBytes());
+    when(smpakParser.getFile(WordsFromExamplesConverterTest.xmlFileName))
+        .thenReturn(WordsFromExamplesConverterTest.xmlFile.getBytes());
   }
 
   @Test
@@ -37,8 +36,8 @@ public class WordsWithSoundsConverterTest {
   @Test
   public void checkCardFields() {
     Deck<AnkiCard> deck = converter.makeDeck(smpakParser);
-    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("pytanie");
-    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("question");
+    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("question");
+    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("answer");
     assertThat(deck.get(0).getAnswer().get("sound")).isEqualTo("[sound:12345a.mp3]");
   }
 }

@@ -22,7 +22,7 @@ public class SmpakParserWithUpdates implements Parser {
   }
 
   /**
-   * Checks if given file is correct.
+   * Checks if format of given file is correct.
    */
   @Override
   public boolean isSmpakFile() {
@@ -36,13 +36,12 @@ public class SmpakParserWithUpdates implements Parser {
   public void parse() {
     smpakParser.parse();
     parseSmdifs();
-
   }
 
   /**
    * Returns most recent file as byte array or empty byte array if file not found.
    * 
-   * @return
+   * @return - file content as byte array.
    */
   @Override
   public byte[] getFile(String fileName) {
@@ -64,8 +63,8 @@ public class SmpakParserWithUpdates implements Parser {
   }
 
   private void parseSmdifs() {
-    getSmdifs().forEach(t -> {
-      Parser smdifParser = new SmpakParser(t);
+    getSmdifs().forEach(path -> {
+      Parser smdifParser = new SmpakParser(path);
       if (smdifParser.isSmpakFile()) {
         smdifParsers.add(smdifParser);
       }

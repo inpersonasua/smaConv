@@ -1,63 +1,53 @@
 package smaConv.converters;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import smaConv.util.AnkiCard;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.XmlParser;
 
+/**
+ * Makes Deck of AnkiCard's as a cloze deletion type
+ * (<a href="https://apps.ankiweb.net/docs/manual.html#cloze">see Anki SRS online
+ * documentation</a>).
+ *
+ */
 public class ClozeConverter extends Converter {
-  private static String FILES_TO_CONVERT = "//element/element/element/element[@subtype=\"2\"]/@id";
-
-  private static String FRONT = "//item/parts/part[@name=\"example\" and @type=\"text\"]/text()";
-  private static String BACK = "//item/parts/part[@name=\"example\" and @type=\"translation_pl\"]/text()";
-  private static String SYNONYMS = "//item/parts/part[@name=\"synonyms\" and @type=\"text\"]/text()";
-
   private final XmlParser xmlParser = new XmlParser();
 
   @Override
   public Deck<AnkiCard> makeDeck(Parser smpakParser) {
-    Deck<AnkiCard> deck = new Deck<>();
+    Converter converter;
+    if (hasExamples(smpakParser)) {
+      converter = new ClozeConverterFromExamples();
+    } else {
+      converter = new SimpleClozeConverter();
+    }
 
+    return converter.makeDeck(smpakParser);
+  }
+
+  /**
+   * Check if Parser contains units with example sentences.
+   *
+   * @param smpakParser
+   * @return true when Parser xml units have example sentences
+   */
+  protected boolean hasExamples(Parser smpakParser) {
+    String filesExpression = "//element/element/element/element[@subtype=\"2\"]/@id";
     List<String> filesToConvert = super.filesToConvert(smpakParser.getFile("course.xml"),
-        FILES_TO_CONVERT);
+        filesExpression);
 
-    for (String file : filesToConvert) {
-      deck.add(convert(smpakParser.getFile(file), file));
+    byte[] file = smpakParser.getFile(filesToConvert.get(0));
+
+    String exampleSentence = "//item/parts/part[@name=\"example\" and @type=\"text\"]/text()";
+    String exampleTranslation = "//item/parts/part[@name=\"example\" and @type=\"translation_pl\"]/text()";
+    if (xmlParser.getValue(file, exampleSentence).isEmpty()
+        || xmlParser.getValue(file, exampleTranslation).isEmpty()) {
+      return false;
+    } else {
+      return true;
     }
-
-    deck.setQuestionTemplate("{{cloze:sentence}}<br>{{synonyms}}");
-    deck.setAnswerTemplate("{{cloze:sentence}}<br>{{translation}}<br>{{synonyms}}");
-    return deck;
-  }
-
-  protected AnkiCard convert(byte[] xmlFile, String xmlFileName) {
-    Map<String, String> question = new HashMap<>();
-    Map<String, String> answer = new HashMap<>();
-
-    String frontText = xmlParser.getValue(xmlFile, FRONT);
-    String backText = xmlParser.getValue(xmlFile, BACK);
-
-    String[] clozeString = cloze(frontText, backText);
-
-    String synonyms = xmlParser.getValue(xmlFile, SYNONYMS);
-
-    question.put("sentence", clozeString[0]);
-    answer.put("translation", clozeString[1]);
-    answer.put("synonyms", synonyms);
-    return new AnkiCard(question, answer);
-  }
-
-  protected String[] cloze(String sentence, String translation) {
-    if (sentence.contains("[") && translation.contains("[")) {
-      sentence = sentence.replaceFirst("\\[", "{{c1::").replaceFirst("\\]", "::"
-          + translation.substring(translation.indexOf('[') + 1, translation.indexOf(']')) + "}}");
-
-      translation = translation.replace("[", "").replace("]", "");
-    }
-    return new String[] { sentence, translation };
   }
 }

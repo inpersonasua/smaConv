@@ -7,26 +7,23 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import smaConv.converters.ClozeWithSoundConverter;
 import smaConv.util.AnkiCard;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.SmpakParser;
 
-public class ClozeWithSoundConverterTest {
-  ClozeWithSoundConverter converter;
+public class ClozeConverterFromExamplesWithSoundTest {
+  ClozeConverterFromExamplesWithSound converter;
   Parser smpakParser;
-
-  String expectedQuestion = "Sentence with {{c1::question::pytaniem}} in brackets.";
-  String expectedAnswer = "Zdanie z pytaniem w nawiasach.";
 
   @Before
   public void setUp() {
-    converter = new ClozeWithSoundConverter();
+    converter = new ClozeConverterFromExamplesWithSound();
     smpakParser = mock(SmpakParser.class);
-    when(smpakParser.getFile("course.xml")).thenReturn(ClozeConverterTest.courseXml.getBytes());
-    when(smpakParser.getFile(ClozeConverterTest.xmlFileName))
-        .thenReturn(ClozeConverterTest.xmlFile.getBytes());
+    when(smpakParser.getFile("course.xml"))
+        .thenReturn(ClozeConverterFromExamplesTest.courseXml.getBytes());
+    when(smpakParser.getFile(ClozeConverterFromExamplesTest.xmlFileName))
+        .thenReturn(ClozeConverterFromExamplesTest.xmlFile.getBytes());
   }
 
   @Test
@@ -40,8 +37,11 @@ public class ClozeWithSoundConverterTest {
   @Test
   public void checkCardFields() {
     Deck<AnkiCard> deck = converter.makeDeck(smpakParser);
-    assertThat(deck.get(0).getQuestion().get("sentence")).isEqualTo(expectedQuestion);
-    assertThat(deck.get(0).getAnswer().get("translation")).isEqualTo(expectedAnswer);
+    assertThat(deck.get(0).getQuestion().get("sentence"))
+        .isEqualTo(ClozeConverterFromExamplesTest.expectedQuestion);
+    assertThat(deck.get(0).getAnswer().get("translation"))
+        .isEqualTo(ClozeConverterFromExamplesTest.expectedAnswer);
     assertThat(deck.get(0).getAnswer().get("sound")).isEqualTo("[sound:12345a.mp3]");
   }
+
 }

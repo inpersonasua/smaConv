@@ -11,8 +11,23 @@ import smaConv.util.XmlParser;
 public abstract class Converter {
   private final XmlParser xmlParser = new XmlParser();
 
+  /**
+   * Converts supermemo course to Deck of AnkiCard's.
+   *
+   * @param smpakParser
+   * @return
+   */
   public abstract Deck<AnkiCard> makeDeck(Parser smpakParser);
 
+  /**
+   * Return a List of files for given subtype (as a part of XPath expression) from course.xml.
+   *
+   * @param courseXml
+   *          - content of course.xml file.
+   * @param expression
+   *          - full XPath expression to select desired subtype of exercises.
+   * @return list of xml files.
+   */
   protected List<String> filesToConvert(byte[] courseXml, String expression) {
     List<String> xmlFileList = new ArrayList<>();
     for (String item : xmlParser.getValues(courseXml, expression)) {
