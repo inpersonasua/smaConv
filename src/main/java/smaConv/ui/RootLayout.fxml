@@ -31,7 +31,7 @@
             <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="1. Otwórz plik bazy supermemo ( *.smpak):">
+            <Label text="%ui.open">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -41,7 +41,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </TextField>
-            <Label text="2. Wybierz plik docelowy (*.apkg):" GridPane.rowIndex="2">
+            <Label text="%ui.destination" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -53,7 +53,7 @@
             </TextField>
             <VBox spacing="10.0" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
                <children>
-                  <RadioButton fx:id="words" alignment="TOP_LEFT" mnemonicParsing="false" selected="true" text="Słówka">
+                  <RadioButton fx:id="words" alignment="TOP_LEFT" mnemonicParsing="false" selected="true" text="%ui.words">
                      <toggleGroup>
                         <ToggleGroup fx:id="group1" />
                      </toggleGroup>
@@ -61,15 +61,15 @@
                         <Tooltip text="dom&#10;-----------&#10;house" />
                      </tooltip>
                   </RadioButton>
-                  <RadioButton fx:id="wordsWithSound" mnemonicParsing="false" text="Słówka + nagrania" toggleGroup="$group1">
+                  <RadioButton fx:id="wordsWithSound" mnemonicParsing="false" text="%ui.wordsAndSounds" toggleGroup="$group1">
                      <tooltip>
                         <Tooltip text="dom&#10;-----------&#10;house ♪" />
                      </tooltip></RadioButton>
-                  <RadioButton fx:id="clozeDeletion" alignment="TOP_LEFT" mnemonicParsing="false" text="Luka" toggleGroup="$group1">
+                  <RadioButton fx:id="clozeDeletion" alignment="TOP_LEFT" mnemonicParsing="false" text="%ui.cloze" toggleGroup="$group1">
                      <tooltip>
                         <Tooltip text="The girl have a [kot].&#10;kitten&#10;-------------------------------&#10;The girl have a cat.&#10;Dziewczyna ma kota." />
                      </tooltip></RadioButton>
-                  <RadioButton fx:id="clozeDeletionWithSound" mnemonicParsing="false" text="Luka + nagrania" toggleGroup="$group1">
+                  <RadioButton fx:id="clozeDeletionWithSound" mnemonicParsing="false" text="%ui.clozeAndSounds" toggleGroup="$group1">
                      <tooltip>
                         <Tooltip text="The girl have a [kot].&#10;kitten&#10;-------------------------------&#10;The girl have a cat.  ♪&#10;Dziewczyna ma kota." />
                      </tooltip></RadioButton>
@@ -102,13 +102,13 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Button>
-            <Label text="3. Wybierz typ kart:" GridPane.rowIndex="4">
+            <Label text="%ui.chooseCard" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" />
                </padding>
             </Label>
          </children>
       </GridPane>
-      <Button fx:id="startStopButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleConvert" prefHeight="50.0" prefWidth="100.0" text="4. Start" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="startStopButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleConvert" prefHeight="50.0" prefWidth="100.0" text="%ui.startButton" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
    </children>
 </AnchorPane>

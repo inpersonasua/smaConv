@@ -14,7 +14,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import smaConv.SuperMemoToAnkiConverter;
 import smaConv.converters.Converter;
 import smaConv.util.AnkiApkg;
 import smaConv.util.AnkiCard;
@@ -39,9 +38,11 @@ public class SuperMemoToAnkiConverterTest {
       + "<course xmlns=\"http://www.supermemo.net/2006/smux\">\r\n" //
       + "  <title>Title</title>\r\n"//
       + "</course>";
-
+  
   @Before
   public void setUp() {
+    
+
     parser = mock(Parser.class);
     converter = mock(Converter.class);
     apkg = mock(AnkiApkg.class);
@@ -74,7 +75,7 @@ public class SuperMemoToAnkiConverterTest {
     when(parser.getFile("course.xml")).thenReturn(notVocabularyCourseXml.getBytes());
 
     assertThat(smux2anki.convert())
-        .isEqualTo("Do konwertowania nadają się tylko kursy słownictwa.");
+        .isEqualTo("Only vocabulary course is suitable for conversion.");
   }
 
   @Test

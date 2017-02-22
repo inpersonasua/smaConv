@@ -30,30 +30,28 @@ dependencies {
 	compile group: 'org.riversun', name: 'bigdoc', version: '0.3.0'
 }
 
+
 test {
-	scanForTestClasses = true;
-	exclude "**/*ParameterizedTest*.class"
+	scanForTestClasses = true
+	exclude "**/*ParameterizedTest*.class" 
+	testLogging {
+		exceptionFormat = 'full'
+	}
 }
 
 jar {
   manifest {
     attributes(
-      'Main-Class': 'smaConv.MainApp',
+      'Main-Class': 'smaConv.MainApp'
     )
   }
   from('src/main/java') {
   	include '**/*.png'
   	include '**/*.fxml'
+  	include '**/*.properties'
   }
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs = ['smaConv/ui']
-        }
-    }
-}
 
 task fatJar(type: Jar) {
   manifest.from jar.manifest

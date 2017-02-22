@@ -2,7 +2,9 @@ package smaConv;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,6 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import smaConv.ui.Messages;
 import smaConv.ui.RootLayoutController;
 import smaConv.util.AnkiApkg;
 import smaConv.util.SmpakParserWithUpdates;
@@ -33,7 +36,7 @@ public class MainApp extends Application {
   @Override
   public final void start(Stage primaryStage) {
     this.stage = primaryStage;
-    this.stage.setTitle("smaConv");
+    this.stage.setTitle("smaConv"); //$NON-NLS-1$
     initRootLayout();
 
   }
@@ -41,7 +44,8 @@ public class MainApp extends Application {
   private void initRootLayout() {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(MainApp.class.getResource("ui/RootLayout.fxml"));
+      loader.setLocation(MainApp.class.getResource("ui/RootLayout.fxml")); //$NON-NLS-1$
+      loader.setResources(ResourceBundle.getBundle("smaConv.ui.messages", Locale.getDefault()));
       rootLayout = (AnchorPane) loader.load();
       Scene scene = new Scene(rootLayout);
 
@@ -76,13 +80,13 @@ public class MainApp extends Application {
 
   public final void convert() throws Exception {
     if (controller.getInputFile() == null) {
-      Platform.runLater(() -> showMessage("Wybierz plik *.smpak"));
+      Platform.runLater(() -> showMessage(Messages.getString("MainApp.chooseFile"))); //$NON-NLS-1$
       return;
     } else if (Files.exists(controller.getOutputFile())) {
       Alert alert = new Alert(AlertType.CONFIRMATION);
-      alert.setTitle("Uwaga");
-      alert.setHeaderText(
-          "Plik " + controller.getOutputFile().getFileName() + " już istnieje. Zastąpić?");
+      alert.setTitle(Messages.getString("MainApp.warning")); //$NON-NLS-1$
+      alert.setHeaderText(Messages.getString("MainApp.file") //$NON-NLS-1$
+          + controller.getOutputFile().getFileName() + Messages.getString("MainApp.exist")); //$NON-NLS-1$
       Optional<ButtonType> result = alert.showAndWait();
       if (result.get() == ButtonType.CANCEL) {
         return;
@@ -111,7 +115,7 @@ public class MainApp extends Application {
 
       @Override
       protected void failed() {
-        Platform.runLater(() -> showMessage("Konwersja zakończona niepowodzeniem."));
+        Platform.runLater(() -> showMessage(Messages.getString("MainApp.convertionFinished"))); //$NON-NLS-1$
         isConverting.set(false);
         super.failed();
       }
@@ -125,8 +129,8 @@ public class MainApp extends Application {
 
   private void showMessage(String message) {
     Alert alert = new Alert(AlertType.INFORMATION, message);
-    alert.setTitle("Informacja");
-    alert.setHeaderText("");
+    alert.setTitle(Messages.getString("MainApp.information")); //$NON-NLS-1$
+    alert.setHeaderText(""); //$NON-NLS-1$
     alert.showAndWait().filter(response -> response == ButtonType.OK);
   }
 

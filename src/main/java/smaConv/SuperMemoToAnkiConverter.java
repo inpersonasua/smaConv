@@ -4,6 +4,7 @@ import java.util.Set;
 
 import smaConv.anki_db.AnkiSqlDb;
 import smaConv.converters.Converter;
+import smaConv.ui.Messages;
 import smaConv.util.AnkiApkg;
 import smaConv.util.AnkiCard;
 import smaConv.util.Deck;
@@ -34,24 +35,24 @@ public class SuperMemoToAnkiConverter {
    */
   public String convert() {
     if (!parser.isSmpakFile()) {
-      return "Nieprawidłowy format pliku.";
+      return Messages.getString("SuperMemoToAnkiConverter.WrongFileFormat"); //$NON-NLS-1$
     }
     parser.parse();
 
     if (!isSuitableForConvertion()) {
-      return "Do konwertowania nadają się tylko kursy słownictwa.";
+      return Messages.getString("SuperMemoToAnkiConverter.NotSuitableForConvertion"); //$NON-NLS-1$
     }
 
     Deck<AnkiCard> deck = converter.makeDeck(parser);
 
     AnkiSqlDb ankiDb = new AnkiSqlDb();
     ankiDb.createDb(deck);
-    apkgFile.addToArchive("collection.anki2", ankiDb.getFile());
+    apkgFile.addToArchive("collection.anki2", ankiDb.getFile()); //$NON-NLS-1$
 
     MediaFile mediaFile = new MediaFile();
     Set<String> mediaList = deck.getSounds();
     if (!mediaList.isEmpty()) {
-      String mediaSubdirectory = "media/";
+      String mediaSubdirectory = "media/"; //$NON-NLS-1$
       int i = 1;
       for (String file : mediaList) {
         String key = Integer.toString(i);
@@ -61,18 +62,18 @@ public class SuperMemoToAnkiConverter {
         i++;
       }
     }
-    apkgFile.addToArchive("media", mediaFile.getMediaFile());
+    apkgFile.addToArchive("media", mediaFile.getMediaFile()); //$NON-NLS-1$
     apkgFile.close();
 
-    return "Konwertowanie zakończone powodzeniem.";
+    return Messages.getString("SuperMemoToAnkiConverter.ConvertionFinished"); //$NON-NLS-1$
   }
 
   private boolean isSuitableForConvertion() {
-    byte[] courseXml = parser.getFile("course.xml");
-    String expression = "//type/text()";
+    byte[] courseXml = parser.getFile("course.xml"); //$NON-NLS-1$
+    String expression = "//type/text()"; //$NON-NLS-1$
     XmlParser xmlParser = new XmlParser();
     String value = xmlParser.getValue(courseXml, expression);
-    if (value.equals("vocabulary")) {
+    if (value.equals("vocabulary")) { //$NON-NLS-1$
       return true;
     }
     return false;
