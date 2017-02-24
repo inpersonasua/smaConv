@@ -45,7 +45,7 @@ public class MainApp extends Application {
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(MainApp.class.getResource("ui/RootLayout.fxml")); //$NON-NLS-1$
-      loader.setResources(ResourceBundle.getBundle("smaConv.ui.messages", Locale.getDefault()));
+      loader.setResources(ResourceBundle.getBundle("messages", Locale.getDefault()));
       rootLayout = (AnchorPane) loader.load();
       Scene scene = new Scene(rootLayout);
 
