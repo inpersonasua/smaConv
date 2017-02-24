@@ -36,8 +36,8 @@ public class WordsFromExamplesWithSoundConverterTest {
   @Test
   public void checkCardFields() {
     Deck<AnkiCard> deck = converter.makeDeck(smpakParser);
-    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("question");
-    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("answer");
+    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("example question");
+    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("example answer");
     assertThat(deck.get(0).getAnswer().get("sound")).isEqualTo("[sound:12345a.mp3]");
   }
 }

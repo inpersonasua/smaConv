@@ -9,9 +9,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import smaConv.converters.Converter;
@@ -38,6 +40,11 @@ public class SuperMemoToAnkiConverterTest {
       + "<course xmlns=\"http://www.supermemo.net/2006/smux\">\r\n" //
       + "  <title>Title</title>\r\n"//
       + "</course>";
+  
+  @BeforeClass
+  public static void setLocale() {
+    Locale.setDefault(Locale.ENGLISH);
+  }
   
   @Before
   public void setUp() {

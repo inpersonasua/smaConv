@@ -14,7 +14,7 @@ import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.SmpakParser;
 
-public class WordsWithSoundsConverterTest {
+public class SimpleWordsWithSoundsConverterTest {
   SimpleWordsConverter converter;
   Parser smpakParser;
 
@@ -22,9 +22,9 @@ public class WordsWithSoundsConverterTest {
   public void setUp() {
     converter = new SimpleWordsWithSoundsConverter();
     smpakParser = mock(SmpakParser.class);
-    when(smpakParser.getFile("course.xml")).thenReturn(WordsConverterTest.courseXml.getBytes());
-    when(smpakParser.getFile(WordsConverterTest.xmlFileName))
-        .thenReturn(WordsConverterTest.xmlFile.getBytes());
+    when(smpakParser.getFile("course.xml")).thenReturn(SimpleWordsConverterTest.courseXml.getBytes());
+    when(smpakParser.getFile(SimpleWordsConverterTest.xmlFileName))
+        .thenReturn(SimpleWordsConverterTest.xmlFile.getBytes());
   }
 
   @Test
@@ -37,8 +37,8 @@ public class WordsWithSoundsConverterTest {
   @Test
   public void checkCardFields() {
     Deck<AnkiCard> deck = converter.makeDeck(smpakParser);
-    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("pytanie");
-    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("question");
+    assertThat(deck.get(0).getQuestion().get("front")).isEqualTo("simple question");
+    assertThat(deck.get(0).getAnswer().get("back")).isEqualTo("simple answer");
     assertThat(deck.get(0).getAnswer().get("sound")).isEqualTo("[sound:12345a.mp3]");
   }
 }
