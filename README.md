@@ -1,5 +1,5 @@
 # smaConv
-This simple program converts Supermemo UX vocabulary course to Anki packaged deck (*.apkg).
+This program converts Supermemo UX vocabulary course to Anki packaged deck (*.apkg). It won't preserve your learning progress, it just uses Supermemo database to create new material to study. Only vocabulary courses ("Extreme ..." series) are suitable for conversion.
 
 Usage:
 
