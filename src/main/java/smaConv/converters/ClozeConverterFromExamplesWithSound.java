@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import smaConv.util.AnkiCard;
+import smaConv.util.CardStyles;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.XmlParser;
@@ -33,6 +34,7 @@ class ClozeConverterFromExamplesWithSound extends ClozeConverterFromExamples {
 
     deck.setQuestionTemplate("{{cloze:sentence}}<br>{{synonyms}}");
     deck.setAnswerTemplate("{{cloze:sentence}}{{sound}}<br>{{translation}}<br>{{synonyms}}");
+    deck.setStyle(CardStyles.DEFAULT_STYLE + CardStyles.DEFAULT_CLOZE_STYLE);
     return deck;
   }
 

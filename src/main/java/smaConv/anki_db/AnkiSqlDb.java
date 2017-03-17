@@ -56,7 +56,7 @@ public class AnkiSqlDb {
       if (deck.isEmpty()) {
         throw new RuntimeException("Deck doesn't contain any cards.");
       }
-      colTable.insertData(deck.getQuestionTemplate(), deck.getAnswerTemplate());
+      colTable.insertData(deck.getQuestionTemplate(), deck.getAnswerTemplate(), deck.getStyle());
       notesTable.setKeys(colTable.getKeys());
     } catch (SQLException e1) {
       throw new RuntimeException("Can't prepare colTable.");

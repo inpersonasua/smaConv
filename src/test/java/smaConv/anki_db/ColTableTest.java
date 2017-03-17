@@ -1,5 +1,7 @@
 package smaConv.anki_db;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,8 +23,6 @@ import org.skyscreamer.jsonassert.comparator.JSONComparator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import smaConv.anki_db.ColTable;
-
 public class ColTableTest {
   ColTable colTable;
   long mid = 1485021428123L;
@@ -30,6 +30,7 @@ public class ColTableTest {
   long mod = 1485021428125L;
   String questionTemplate = "{{cloze:question}}<br>{{hint}}";
   String answerTemplate = "{{answer}}{{sound}}<span class=style>{{whatever}}</span>";
+  String cssStyle = ".card { }";
   Connection connection;
   ResultSet resultSet;
 
@@ -38,7 +39,7 @@ public class ColTableTest {
     colTable = new ColTable(mid, did, mod);
     connection = DriverManager.getConnection("jdbc:sqlite::memory:");
     colTable.setUpTable(connection);
-    colTable.insertData(questionTemplate, answerTemplate);
+    colTable.insertData(questionTemplate, answerTemplate, cssStyle);
     Statement statement = connection.createStatement();
     resultSet = statement.executeQuery("select * from col");
   }
@@ -69,5 +70,14 @@ public class ColTableTest {
     JSONAssert.assertEquals(
         "[{\"qfmt\":\"" + questionTemplate + "\", \"afmt\":\"" + answerTemplate + "\"}]",
         tmpls.toString(), new CustomComparator(JSONCompareMode.LENIENT, customization));
+  }
+
+  @Test
+  public void checkCssStyle() throws Exception {
+    String modelsValue = resultSet.getString("models");
+    JSONObject jsonObject = new JSONObject(modelsValue);
+    String css = jsonObject.getJSONObject(Long.toString(mid)).getString("css");
+
+    assertThat(css).isEqualToIgnoringWhitespace(cssStyle);
   }
 }

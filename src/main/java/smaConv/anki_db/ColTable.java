@@ -24,7 +24,7 @@ public class ColTable {
   private final long mid;
   private final long did;
   private final long mod;
-
+  
   private LinkedHashSet<String> keys;
 
   private Connection connection;
@@ -42,13 +42,13 @@ public class ColTable {
     statement.close();
   }
 
-  public void insertData(String questionTemplate, String answerTemplate) throws SQLException {
+  public void insertData(String questionTemplate, String answerTemplate, String cssStyle) throws SQLException {
     PreparedStatement colStatement = connection
         .prepareStatement("INSERT INTO col VALUES (1, 1332961200, 1398130163295, 1398130163168,"
             + " 11, 0, 0, 0, ?, ?, ?, ?, '{}')");
 
     colStatement.setString(1, conf());
-    colStatement.setString(2, models(questionTemplate, answerTemplate));
+    colStatement.setString(2, models(questionTemplate, answerTemplate, cssStyle));
     colStatement.setString(3, decks());
     colStatement.setString(4, dconf());
     colStatement.executeUpdate();
@@ -79,12 +79,12 @@ public class ColTable {
     return confTemplate;
   }
 
-  private String models(String questionTemplate, String answerTemplate) {
+  private String models(String questionTemplate, String answerTemplate, String cssStyle) {    
     String modelsTemplate = "{\"" + mid + "\": {\"vers\": [], \"name\": \"sm\", \"tags\": [], "
         + "\"did\": " + did
         + ", \"usn\": 1586, \"req\": [[0, \"all\", [0]]], \"flds\": [], \"sortf\": 0, "
         + "\"tmpls\": [], \"type\": 0, \"id\": \"" + mid + "\", "
-        + "\"css\": \".card {\\n font-family: arial;\\n font-size: 20px;\\n text-align: center;\\n color: black;\\n background-color: white;\\n}\\n\", "
+        + "\"css\": \"" + cssStyle + "\", "
         + "\"mod\": " + mod + "}}";
 
     String fldsTemplate = "{\"name\": \"\", \"rtl\": false, \"sticky\": false, \"media\": [], \"ord\": 0, \"font\": \"Arial\", \"size\": 20}";
@@ -104,6 +104,7 @@ public class ColTable {
 
       ((ArrayNode) modelsNode.path(Long.toString(mid)).path("tmpls")).insert(0,
           makeTmpls(questionTemplate, answerTemplate));
+            
       return modelsNode.toString();
     } catch (IOException exception) {
       throw new RuntimeException("Error at colTable: " + exception.getMessage());

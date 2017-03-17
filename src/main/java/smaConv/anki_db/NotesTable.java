@@ -63,7 +63,6 @@ public class NotesTable {
     return sfld.toString();
   }
 
-  /////////////////////
   private String flds(AnkiCard card) {
     StringJoiner flds = new StringJoiner(qaSeparator);
     keysSet.forEach((k) -> {
@@ -74,11 +73,6 @@ public class NotesTable {
         flds.add(card.getAnswer().get(k));
       }
     });
-
-    //
-    // card.getQuestion().forEach((k, v) -> flds.add(v));
-    //
-    // card.getAnswer().forEach((k, v) -> flds.add(v));
 
     return flds.toString();
   }

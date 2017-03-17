@@ -8,6 +8,7 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 
 import smaConv.util.AnkiCard;
+import smaConv.util.CardStyles;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.XmlParser;
@@ -46,6 +47,7 @@ class SimpleClozeConverter extends Converter {
 
     deck.setQuestionTemplate("{{cloze:sentence}}");
     deck.setAnswerTemplate("{{cloze:sentence}}<br>{{translation}}");
+    deck.setStyle(CardStyles.DEFAULT_STYLE + CardStyles.DEFAULT_CLOZE_STYLE);
     return deck;
   }
 

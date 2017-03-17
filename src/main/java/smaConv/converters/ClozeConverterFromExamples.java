@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import smaConv.util.AnkiCard;
+import smaConv.util.CardStyles;
 import smaConv.util.Deck;
 import smaConv.util.Parser;
 import smaConv.util.XmlParser;
@@ -42,6 +43,7 @@ class ClozeConverterFromExamples extends Converter {
 
     deck.setQuestionTemplate("{{cloze:sentence}}<br>{{synonyms}}");
     deck.setAnswerTemplate("{{cloze:sentence}}<br>{{translation}}<br>{{synonyms}}");
+    deck.setStyle(CardStyles.DEFAULT_STYLE + CardStyles.DEFAULT_CLOZE_STYLE);
     return deck;
   }
 

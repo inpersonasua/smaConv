@@ -12,6 +12,7 @@ public class Deck<T extends AnkiCard> extends AbstractList<AnkiCard> {
   private final Set<String> sounds = new HashSet<>();
   private String questionTemplate;
   private String answerTemplate;
+  private String cssStyle = CardStyles.DEFAULT_STYLE;
   private static Pattern pattern = Pattern.compile(".*\\[sound:(.+?)\\].*");
 
   public String getAnswerTemplate() {
@@ -28,6 +29,14 @@ public class Deck<T extends AnkiCard> extends AbstractList<AnkiCard> {
 
   public void setQuestionTemplate(String questionTemplate) {
     this.questionTemplate = questionTemplate;
+  }
+  
+  public void setStyle(String style) {
+    this.cssStyle = style;
+  }
+  
+  public String getStyle() {
+    return cssStyle;
   }
 
   public Set<String> getSounds() {
