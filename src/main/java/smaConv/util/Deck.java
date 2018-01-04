@@ -8,7 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Deck<T extends AnkiCard> extends AbstractList<AnkiCard> {
-  private final ArrayList<AnkiCard> cards = new ArrayList<>();
+  private static final int MIN_DECK_SIZE = 2800;
+  private final ArrayList<AnkiCard> cards = new ArrayList<>(MIN_DECK_SIZE);
   private final Set<String> sounds = new HashSet<>();
   private String questionTemplate;
   private String answerTemplate;
